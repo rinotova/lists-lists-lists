@@ -2,7 +2,7 @@
 
 ## Demo
 
-[Lists demo](https://nextjs-hangman-lac.vercel.app/)
+[Lists demo](https://lists-lists-lists.vercel.app/)
 
 ## Stack
 
