@@ -10,10 +10,16 @@ import {
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
+import { env } from "~/env";
 
 function SideBar() {
+  const callbackUrl =
+    process.env.NODE_ENV === "production"
+      ? env.PROD_BASE_URL
+      : env.LOCAL_BASE_URL;
+
   const signOutHandler = () => {
-    void signOut({ callbackUrl: "http://localhost:3000/" });
+    void signOut({ callbackUrl });
   };
 
   return (

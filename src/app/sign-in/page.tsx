@@ -4,10 +4,12 @@ import React from "react";
 import { Button } from "../_components/ui/button";
 import { signIn } from "next-auth/react";
 import { Icons } from "../_components/Icons";
+import { env } from "~/env";
 
 function SignIn() {
+  const callbackBaseUrl = process.env.NODE_ENV === "production" ? env.PROD_BASE_URL : env.LOCAL_BASE_URL:
   const signInHandler = () => {
-    void signIn("google", { callbackUrl: "http://localhost:3000/lists" });
+    void signIn("google", { callbackUrl: `${callbackBaseUrl}/lists` });
   };
 
   return (
