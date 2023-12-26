@@ -1,5 +1,3 @@
-"use client";
-
 import { ListChecks } from "lucide-react";
 import {
   Sheet,
@@ -8,8 +6,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
+import SignOutButton from "./SignOutButton";
 import { env } from "~/env";
 
 function SideBar() {
@@ -17,10 +14,6 @@ function SideBar() {
     process.env.NODE_ENV === "production"
       ? env.PROD_BASE_URL
       : env.LOCAL_BASE_URL;
-
-  const signOutHandler = () => {
-    void signOut({ callbackUrl });
-  };
 
   return (
     <Sheet>
@@ -34,13 +27,7 @@ function SideBar() {
         <SheetHeader>
           <SheetTitle>Lists</SheetTitle>
         </SheetHeader>
-        <Button
-          className="mx-auto w-80"
-          onClick={signOutHandler}
-          variant="outline"
-        >
-          Sign out
-        </Button>
+        <SignOutButton callbackUrl={callbackUrl} />
       </SheetContent>
     </Sheet>
   );
