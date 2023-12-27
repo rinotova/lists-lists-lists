@@ -62,4 +62,6 @@ model ListItem {
     emoji  String?
     listId String  @db.ObjectId
     list   List    @relation(fields: [listId], references: [id])
+
+    @@unique([id, listId])
 }
