@@ -12,7 +12,9 @@ export type ListItem = listItemsList[number];
 
 export const ListSchema = z.object({
   id: z.string().optional(),
-  name: z.string().min(3, { message: "Min length for list name is 3" }),
+  name: z
+    .string()
+    .min(3, { message: "Min characters length for list name is 3." }),
 });
 
 export const ListItemSchema = z.object({

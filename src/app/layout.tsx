@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { TRPCReactProvider } from "~/trpc/react";
 import { cn } from "~/lib/utils";
 import Navbar from "./_components/Navbar";
+import { Toaster } from "./_components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
             <div className="flex-1 flex-grow">{children}</div>
           </main>
         </TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );

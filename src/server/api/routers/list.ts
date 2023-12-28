@@ -66,6 +66,10 @@ export const listRouter = createTRPCRouter({
       where: {
         userIDs: { has: userId },
       },
+      select: {
+        id: true,
+        name: true,
+      },
       orderBy: [
         {
           createdAt: "desc",
