@@ -9,7 +9,7 @@ datasource db {
 
 model Account {
     id                 String  @id @default(cuid()) @map("_id")
-    userId             String
+    userId             String  @db.ObjectId
     type               String
     provider           String
     providerAccountId  String
@@ -31,17 +31,40 @@ model Account {
 model Session {
     id           String   @id @default(cuid()) @map("_id")
     sessionToken String   @unique
-    userId       String
+    userId       String   @db.ObjectId
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid()) @map("_id")
+    id            String    @id @default(auto()) @map("_id") @db.ObjectId
     name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
     Account       Account[]
     Session       Session[]
+    listIDs       String[]  @db.ObjectId
+    lists         List[]    @relation(fields: [listIDs], references: [id])
+}
+
+model List {
+    id        String     @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    listItems ListItem[]
+    userIDs   String[]   @db.ObjectId
+    users     User[]     @relation(fields: [userIDs], references: [id])
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+}
+
+model ListItem {
+    id        String   @id @default(cuid()) @map("_id")
+    text      String
+    emoji     String?
+    complete  Boolean  @default(false)
+    listId    String   @db.ObjectId
+    list      List     @relation(fields: [listId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

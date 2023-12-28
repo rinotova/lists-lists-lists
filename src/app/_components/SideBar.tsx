@@ -1,4 +1,3 @@
-import { ListChecks } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -8,24 +7,27 @@ import {
 } from "./ui/sheet";
 import SignOutButton from "./SignOutButton";
 import { env } from "~/env";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { getServerAuthSession } from "~/server/auth";
 
-function SideBar() {
+async function SideBar() {
   const callbackUrl =
     process.env.NODE_ENV === "production"
       ? env.PROD_BASE_URL
       : env.LOCAL_BASE_URL;
+  const session = await getServerAuthSession();
 
   return (
     <Sheet>
       <SheetTrigger className="group -m-2 flex items-center p-2">
-        <ListChecks
-          aria-hidden="true"
-          className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-        />
+        <Avatar>
+          <AvatarImage src={session?.user?.image as string | undefined} />
+          <AvatarFallback>{session?.user.name?.charAt(0)}</AvatarFallback>
+        </Avatar>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col sm:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Lists</SheetTitle>
+          <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <SignOutButton callbackUrl={callbackUrl} />
       </SheetContent>

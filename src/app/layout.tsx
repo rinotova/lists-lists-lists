@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { TRPCReactProvider } from "~/trpc/react";
 import { cn } from "~/lib/utils";
 import Navbar from "./_components/Navbar";
+import { Toaster } from "./_components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,11 +30,12 @@ export default function RootLayout({
         className={cn("relative h-full font-sans antialiased", inter.variable)}
       >
         <TRPCReactProvider cookies={cookies().toString()}>
-          <main className="relative flex min-h-screen flex-col">
+          <main className="relative flex min-h-screen flex-col antialiased">
             <Navbar />
             <div className="flex-1 flex-grow">{children}</div>
           </main>
         </TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );

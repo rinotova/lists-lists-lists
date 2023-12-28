@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MaxWidthWrapper from "./MaxWidthWrapper";
+import MaxWidthWrapperNavBar from "./MaxWidthWrapperNavBar";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./Icons";
 import { getServerAuthSession } from "~/server/auth";
@@ -11,7 +11,7 @@ async function Navbar() {
   return (
     <nav className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
       <header className="relative bg-white">
-        <MaxWidthWrapper>
+        <MaxWidthWrapperNavBar>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center justify-between">
               <div className="ml-4 flex lg:ml-0">
@@ -39,12 +39,12 @@ async function Navbar() {
 
                   {user ? (
                     <Link
-                      href="/create-list"
+                      href="/lists"
                       className={buttonVariants({
                         variant: "ghost",
                       })}
                     >
-                      Create list
+                      My lists
                     </Link>
                   ) : null}
 
@@ -61,7 +61,7 @@ async function Navbar() {
               </div>
             </div>
           </div>
-        </MaxWidthWrapper>
+        </MaxWidthWrapperNavBar>
       </header>
     </nav>
   );
