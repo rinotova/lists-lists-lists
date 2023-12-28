@@ -3,10 +3,8 @@
 import React from "react";
 import { api } from "~/trpc/react";
 import Item from "./Item";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 function ListItems({ listId }: { listId: string }) {
-  const [parent] = useAutoAnimate();
   const listItems = api.list.getListItems.useQuery({ listId });
 
   if (!listItems.isFetching && !listItems.data?.length) {
@@ -14,7 +12,7 @@ function ListItems({ listId }: { listId: string }) {
   }
 
   return (
-    <div ref={parent} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {listItems.data?.map((item) => <Item key={item.id} item={item} />)}
     </div>
   );
