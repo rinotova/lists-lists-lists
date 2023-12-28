@@ -30,7 +30,7 @@ export default function RootLayout({
         className={cn("relative h-full font-sans antialiased", inter.variable)}
       >
         <TRPCReactProvider cookies={cookies().toString()}>
-          <main className="relative flex min-h-screen flex-col">
+          <main className="relative flex min-h-screen flex-col antialiased">
             <Navbar />
             <div className="flex-1 flex-grow">{children}</div>
           </main>

@@ -39,12 +39,12 @@ async function Navbar() {
 
                   {user ? (
                     <Link
-                      href="/create-list"
+                      href="/lists"
                       className={buttonVariants({
                         variant: "ghost",
                       })}
                     >
-                      Create list
+                      My lists
                     </Link>
                   ) : null}
 

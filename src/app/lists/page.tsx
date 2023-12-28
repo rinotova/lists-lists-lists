@@ -1,12 +1,15 @@
 import UserLists from "../_components/UserLists";
 import MaxWidthWrapper from "../_components/MaxWidthWrapper";
-import NewListForm from "../_components/NewListForm";
+import AddItemForm from "../_components/AddItemForm";
+import { useGetAuthorizedUserOrRedirect } from "~/hooks/useGetAuthorizedUserOrRedirect";
 
-function Lists() {
+async function Lists() {
+  await useGetAuthorizedUserOrRedirect();
+
   return (
     <MaxWidthWrapper className="p-4">
       <div className="flex flex-col gap-4">
-        <NewListForm />
+        <AddItemForm />
         <UserLists />
       </div>
     </MaxWidthWrapper>

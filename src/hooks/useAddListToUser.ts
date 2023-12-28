@@ -1,18 +1,14 @@
-"use client";
-
-import React, { type FormEvent, useState } from "react";
-import { Input } from "./ui/input";
-import { PlusSquare } from "lucide-react";
+import { type FormEvent, useState } from "react";
+import { useToast } from "~/app/_components/ui/use-toast";
 import { ListSchema, type UserList } from "~/models/List";
-import { useToast } from "./ui/use-toast";
 import { api } from "~/trpc/react";
 
-function NewListForm() {
-  const [listName, setListName] = useState("");
+export const useAddListToUser = () => {
+  const [itemName, setItemName] = useState("");
   const trpcUtils = api.useUtils();
 
   const { toast } = useToast();
-  const { mutate } = api.list.addListToUser.useMutation({
+  const { mutate, isLoading } = api.list.addListToUser.useMutation({
     onMutate: async (newList) => {
       // Cancel any outgoing refetches so they don't overwrite our optimistic update.
       await trpcUtils.list.getUserLists.cancel();
@@ -31,7 +27,7 @@ function NewListForm() {
         }
         return [optimisticList, ...prev];
       });
-      setListName("");
+      setItemName("");
       return { previousLists };
     },
     onError: (err, newList, context) => {
@@ -41,27 +37,29 @@ function NewListForm() {
         variant: "destructive",
         duration: 2500,
       });
-      setListName("");
+      setItemName("");
       trpcUtils.list.getUserLists.setData(
         undefined,
         () => context?.previousLists,
       );
     },
     onSettled: async () => {
-      console.log("invalidating");
       await trpcUtils.list.getUserLists.invalidate();
     },
   });
 
   const newListHandler = (e: FormEvent) => {
     e.preventDefault();
+    if (isLoading) {
+      return;
+    }
     const inputParseResult = ListSchema.safeParse({
-      name: listName,
+      name: itemName,
     });
 
     if (inputParseResult.success) {
       mutate({
-        name: listName,
+        name: itemName,
       });
     } else {
       toast({
@@ -72,26 +70,11 @@ function NewListForm() {
       });
     }
   };
-  return (
-    <form
-      onSubmit={newListHandler}
-      className="flex h-12 w-full items-center justify-center gap-2"
-    >
-      <Input
-        value={listName}
-        onChange={(e) => setListName(e.target.value)}
-        placeholder="New list name..."
-        className="h-12 text-center text-2xl drop-shadow-md"
-      />
-      <button
-        type="submit"
-        disabled={!listName}
-        className="cursor-pointer hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <PlusSquare className="h-14 w-14  stroke-1 " />
-      </button>
-    </form>
-  );
-}
 
-export default NewListForm;
+  return {
+    addItemHandler: newListHandler,
+    itemName,
+    setItemName,
+    isLoading,
+  };
+};

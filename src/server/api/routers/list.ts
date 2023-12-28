@@ -85,6 +85,13 @@ export const listRouter = createTRPCRouter({
         where: {
           listId,
         },
+        select: {
+          complete: true,
+          emoji: true,
+          id: true,
+          listId: true,
+          text: true,
+        },
         orderBy: [
           {
             createdAt: "desc",
