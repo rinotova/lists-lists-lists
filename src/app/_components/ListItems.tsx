@@ -13,7 +13,9 @@ function ListItems({ listId }: { listId: string }) {
 
   return (
     <div className="flex flex-col gap-2">
-      {listItems.data?.map((item) => <Item key={item.id} item={item} />)}
+      {listItems.data?.map((item) => (
+        <Item key={item.id} item={item} listId={listId} />
+      ))}
     </div>
   );
 }

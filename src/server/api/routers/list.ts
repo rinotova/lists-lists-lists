@@ -140,7 +140,39 @@ export const listRouter = createTRPCRouter({
       const userId = ctx.session.user.id;
       const { listId } = input;
 
-      return ctx.db.list.delete({
+      const list = await ctx.db.list.findUnique({
+        where: {
+          id: listId,
+        },
+      });
+
+      if (!list) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "List does not exist",
+        });
+      }
+      const userIds = [...list.userIDs];
+      const userIdindex = userIds.indexOf(userId);
+      if (userIdindex !== -1) {
+        userIds.splice(userIdindex, 1);
+      }
+
+      if (userIds.length === 0) {
+        return ctx.db.list.delete({
+          where: {
+            id: listId,
+            userIDs: { has: userId },
+          },
+        });
+      }
+
+      return ctx.db.list.update({
+        data: {
+          userIDs: {
+            set: userIds,
+          },
+        },
         where: {
           id: listId,
           userIDs: { has: userId },
