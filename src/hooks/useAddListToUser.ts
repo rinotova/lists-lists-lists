@@ -33,7 +33,10 @@ export const useAddListToUser = () => {
     onError: (err, newList, context) => {
       toast({
         title: "Error",
-        description: "There was an error when creating the list",
+        description:
+          err.data?.code === "BAD_REQUEST"
+            ? err.message
+            : "There was an error when creating the list",
         variant: "destructive",
         duration: 2500,
       });

@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import {
   GetListItemSchema,
   GetListSchema,
@@ -57,7 +58,10 @@ export const listRouter = createTRPCRouter({
         });
       }
 
-      return existingList;
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "A list name must be unique",
+      });
     }),
   getUserLists: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
