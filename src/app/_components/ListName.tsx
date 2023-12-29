@@ -1,9 +1,9 @@
 import React from "react";
 
-function ListName() {
+function ListName({ listName }: { listName?: string }) {
   return (
     <div className="flex items-center rounded-none text-lg">
-      <p className="break-all">{"List name"}</p>
+      <p className="break-all">{listName}</p>
     </div>
   );
 }

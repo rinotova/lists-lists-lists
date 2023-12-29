@@ -63,6 +63,7 @@ export const useAddItemToList = ({
     const inputParseResult = ListItemSchema.safeParse({
       text: itemName,
       listId,
+      complete: false,
     });
 
     if (inputParseResult.success) {
@@ -70,6 +71,7 @@ export const useAddItemToList = ({
         text: itemName,
         listId,
         emoji: suggestedEmoji,
+        complete: false,
       });
     } else {
       toast({

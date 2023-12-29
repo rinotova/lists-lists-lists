@@ -82,6 +82,21 @@ export const listRouter = createTRPCRouter({
       ],
     });
   }),
+  getListName: protectedProcedure
+    .input(GetListSchema)
+    .query(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const { listId } = input;
+      return ctx.db.list.findUnique({
+        where: {
+          id: listId,
+          userIDs: { has: userId },
+        },
+        select: {
+          name: true,
+        },
+      });
+    }),
   getListItems: protectedProcedure
     .input(GetListSchema)
     .query(async ({ ctx, input }) => {
@@ -107,7 +122,7 @@ export const listRouter = createTRPCRouter({
   updateListItem: protectedProcedure
     .input(ListItemSchema)
     .mutation(async ({ ctx, input }) => {
-      const { text, id, emoji } = input;
+      const { text, id, emoji, complete } = input;
 
       return ctx.db.listItem.update({
         where: {
@@ -116,6 +131,7 @@ export const listRouter = createTRPCRouter({
         data: {
           text,
           emoji,
+          complete,
         },
       });
     }),

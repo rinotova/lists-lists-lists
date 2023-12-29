@@ -34,7 +34,8 @@ export const getSuggestedEmoji = (phrase: string, isListContext: boolean) => {
   if (emojiKeyword) {
     const singularKeyword = singularize(emojiKeyword);
     for (const emoji of emojies) {
-      if (emoji.keywords.indexOf(singularKeyword || emojiKeyword) !== -1) {
+      const keywordsArray = emoji.keywords.toLowerCase().trim().split(" ");
+      if (keywordsArray.includes(singularKeyword || emojiKeyword)) {
         return Number(`0x${emojiToUnicode(emoji.symbol)}`);
       }
     }
