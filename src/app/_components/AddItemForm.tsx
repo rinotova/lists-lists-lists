@@ -5,35 +5,20 @@ import { PlusSquare } from "lucide-react";
 import { type FormEvent } from "react";
 import { useAddItemToList } from "~/hooks/useAddItemToList";
 import { useAddListToUser } from "~/hooks/useAddListToUser";
-import { emojies } from "../../emojis";
-import { emojiToUnicode, singularize } from "~/utils/emojiHelpers";
+import { getSuggestedEmoji } from "~/lib/utils";
 
 function AddItemForm({ listId }: { listId?: string }) {
   const addListToUser = useAddListToUser();
   const addItemToList = useAddItemToList({ listId });
-
-  const { addItem, itemName, setItemName, isLoading } = listId
-    ? addItemToList
-    : addListToUser;
+  const isNewListContext = !listId;
+  const { addItem, itemName, setItemName, isLoading } = isNewListContext
+    ? addListToUser
+    : addItemToList;
   const disableSubmitButton = !itemName || isLoading;
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // search for emoji
-    const emojiKeywordArray = itemName.toLowerCase().trim().split(" ");
-    const emojiKeyword = emojiKeywordArray[emojiKeywordArray.length - 1];
-    let suggestedEmoji;
-    if (emojiKeyword) {
-      const singularKeyword = singularize(emojiKeyword);
-      console.log(singularKeyword);
-      for (const emoji of emojies) {
-        if (emoji.keywords.indexOf(singularKeyword || emojiKeyword) !== -1) {
-          suggestedEmoji = Number(`0x${emojiToUnicode(emoji.symbol)}`);
-          break;
-        }
-      }
-    }
+    const suggestedEmoji = getSuggestedEmoji(itemName, isNewListContext);
     addItem(suggestedEmoji);
   };
 
@@ -45,7 +30,9 @@ function AddItemForm({ listId }: { listId?: string }) {
       <Input
         value={itemName}
         onChange={(e) => setItemName(e.target.value)}
-        placeholder={!!listId ? "New item text..." : "New list name..."}
+        placeholder={
+          !!isNewListContext ? "New item text..." : "New list name..."
+        }
         className="h-12 text-center text-2xl drop-shadow-md"
       />
       <button

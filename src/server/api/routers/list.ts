@@ -13,8 +13,6 @@ export const listRouter = createTRPCRouter({
     .input(ListItemSchema)
     .mutation(async ({ ctx, input }) => {
       const { text, listId, emoji } = input;
-      console.log(emoji);
-      console.log("RINOOOOOOOOOOOOOOO");
       return ctx.db.listItem.create({
         data: {
           text,
@@ -31,7 +29,7 @@ export const listRouter = createTRPCRouter({
     .input(ListSchema)
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const { name } = input;
+      const { name, emoji } = input;
 
       const existingList = await ctx.db.list.findFirst({
         where: {
@@ -45,6 +43,7 @@ export const listRouter = createTRPCRouter({
           data: {
             name: name,
             userIDs: [userId],
+            emoji,
           },
         });
       }
@@ -74,6 +73,7 @@ export const listRouter = createTRPCRouter({
       select: {
         id: true,
         name: true,
+        emoji: true,
       },
       orderBy: [
         {

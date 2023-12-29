@@ -33,8 +33,13 @@ function UserListItem({ item }: { item: UserList }) {
     >
       <Link className="w-full" href={`/list/${item.id}`}>
         <Card className="flex items-center rounded-none bg-orange-300 drop-shadow-sm">
-          <CardContent className="flex items-center  gap-2 p-4 pt-4 text-lg">
+          <CardContent className="flex items-center gap-2 p-4 pt-4 text-lg">
             <p className="break-all">{item.name}</p>
+            {item.emoji ? (
+              <span className="text-3xl">
+                {String.fromCodePoint(item.emoji)}
+              </span>
+            ) : null}
           </CardContent>
         </Card>
       </Link>

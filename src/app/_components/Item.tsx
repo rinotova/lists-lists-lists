@@ -31,7 +31,7 @@ function Item({ item, listId }: { item: ListItem; listId: string }) {
       actionButtonMinWidth={70}
     >
       <Card className="flex w-full items-center rounded-none bg-blue-300 drop-shadow-sm">
-        <CardContent className="flex items-center  gap-2 p-4 pt-4 text-lg">
+        <CardContent className="flex items-center gap-2 p-4 pt-4 text-lg">
           <p className="break-all">{item.text}</p>
           {item.emoji ? (
             <span className="text-3xl">{String.fromCodePoint(item.emoji)}</span>

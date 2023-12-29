@@ -52,6 +52,7 @@ model List {
     id        String     @id @default(auto()) @map("_id") @db.ObjectId
     name      String     @unique
     listItems ListItem[]
+    emoji     Int?
     userIDs   String[]   @db.ObjectId
     users     User[]     @relation(fields: [userIDs], references: [id])
     createdAt DateTime   @default(now())

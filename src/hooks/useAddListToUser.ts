@@ -22,6 +22,7 @@ export const useAddListToUser = () => {
         const optimisticList: UserList = {
           id: "optimisticListId",
           name: newList.name,
+          emoji: newList.emoji as number | null,
         };
         if (!prev) {
           return [optimisticList];
@@ -64,6 +65,7 @@ export const useAddListToUser = () => {
     if (inputParseResult.success) {
       mutate({
         name: itemName,
+        emoji: suggestedEmoji,
       });
     } else {
       toast({
