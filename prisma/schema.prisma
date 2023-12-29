@@ -61,7 +61,7 @@ model List {
 model ListItem {
     id        String   @id @default(cuid()) @map("_id")
     text      String
-    emoji     String?
+    emoji     Int?
     complete  Boolean  @default(false)
     listId    String   @db.ObjectId
     list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)

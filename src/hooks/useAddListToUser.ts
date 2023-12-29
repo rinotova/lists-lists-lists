@@ -1,10 +1,11 @@
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
 import { useToast } from "~/app/_components/ui/use-toast";
 import { ListSchema, type UserList } from "~/models/List";
 import { api } from "~/trpc/react";
 
 export const useAddListToUser = () => {
   const [itemName, setItemName] = useState("");
+
   const trpcUtils = api.useUtils();
 
   const { toast } = useToast();
@@ -28,6 +29,7 @@ export const useAddListToUser = () => {
         return [optimisticList, ...prev];
       });
       setItemName("");
+
       return { previousLists };
     },
     onError: (err, newList, context) => {
@@ -51,8 +53,7 @@ export const useAddListToUser = () => {
     },
   });
 
-  const newListHandler = (e: FormEvent) => {
-    e.preventDefault();
+  const addItem = (suggestedEmoji?: number) => {
     if (isLoading) {
       return;
     }
@@ -75,7 +76,7 @@ export const useAddListToUser = () => {
   };
 
   return {
-    addItemHandler: newListHandler,
+    addItem,
     itemName,
     setItemName,
     isLoading,

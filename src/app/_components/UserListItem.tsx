@@ -32,7 +32,7 @@ function UserListItem({ item }: { item: UserList }) {
       actionButtonMinWidth={70}
     >
       <Link className="w-full" href={`/list/${item.id}`}>
-        <Card className="flex items-center bg-orange-300  drop-shadow-sm">
+        <Card className="flex items-center rounded-none bg-orange-300 drop-shadow-sm">
           <CardContent className="flex items-center  gap-2 p-4 pt-4 text-lg">
             <p className="break-all">{item.name}</p>
           </CardContent>

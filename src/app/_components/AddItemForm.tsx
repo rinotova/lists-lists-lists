@@ -2,21 +2,46 @@
 
 import { Input } from "./ui/input";
 import { PlusSquare } from "lucide-react";
+import { type FormEvent } from "react";
 import { useAddItemToList } from "~/hooks/useAddItemToList";
 import { useAddListToUser } from "~/hooks/useAddListToUser";
+import { emojies } from "../../emojis";
+import { emojiToUnicode } from "~/utils/emojiHelpers";
+import plural from "pluralize";
 
 function AddItemForm({ listId }: { listId?: string }) {
   const addListToUser = useAddListToUser();
   const addItemToList = useAddItemToList({ listId });
 
-  const { addItemHandler, itemName, setItemName, isLoading } = listId
+  const { addItem, itemName, setItemName, isLoading } = listId
     ? addItemToList
     : addListToUser;
   const disableSubmitButton = !itemName || isLoading;
 
+  const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // search for emoji
+    const emojiKeywordArray = itemName.toLowerCase().trim().split(" ");
+    const emojiKeyword = emojiKeywordArray[emojiKeywordArray.length - 1];
+    let suggestedEmoji;
+    if (emojiKeyword) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      const singularKeyword = plural.singular(emojiKeyword) as string;
+      console.log(singularKeyword);
+      for (const emoji of emojies) {
+        if (emoji.keywords.indexOf(singularKeyword || emojiKeyword) !== -1) {
+          suggestedEmoji = Number(`0x${emojiToUnicode(emoji.symbol)}`);
+          break;
+        }
+      }
+    }
+    addItem(suggestedEmoji);
+  };
+
   return (
     <form
-      onSubmit={addItemHandler}
+      onSubmit={onSubmitHandler}
       className="flex h-12 w-full items-center justify-center gap-2"
     >
       <Input

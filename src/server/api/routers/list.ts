@@ -13,7 +13,8 @@ export const listRouter = createTRPCRouter({
     .input(ListItemSchema)
     .mutation(async ({ ctx, input }) => {
       const { text, listId, emoji } = input;
-
+      console.log(emoji);
+      console.log("RINOOOOOOOOOOOOOOO");
       return ctx.db.listItem.create({
         data: {
           text,

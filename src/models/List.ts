@@ -21,7 +21,7 @@ export const ListItemSchema = z.object({
   id: z.string().optional(),
   text: z.string().min(3, { message: "Min length for list item name is 3" }),
   listId: z.string(),
-  emoji: z.string().emoji().optional(),
+  emoji: z.number().optional(),
 });
 
 export const GetListSchema = z.object({ listId: z.string() });
