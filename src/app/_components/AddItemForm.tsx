@@ -6,8 +6,7 @@ import { type FormEvent } from "react";
 import { useAddItemToList } from "~/hooks/useAddItemToList";
 import { useAddListToUser } from "~/hooks/useAddListToUser";
 import { emojies } from "../../emojis";
-import { emojiToUnicode } from "~/utils/emojiHelpers";
-import plural from "pluralize";
+import { emojiToUnicode, singularize } from "~/utils/emojiHelpers";
 
 function AddItemForm({ listId }: { listId?: string }) {
   const addListToUser = useAddListToUser();
@@ -26,8 +25,7 @@ function AddItemForm({ listId }: { listId?: string }) {
     const emojiKeyword = emojiKeywordArray[emojiKeywordArray.length - 1];
     let suggestedEmoji;
     if (emojiKeyword) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      const singularKeyword = plural.singular(emojiKeyword) as string;
+      const singularKeyword = singularize(emojiKeyword);
       console.log(singularKeyword);
       for (const emoji of emojies) {
         if (emoji.keywords.indexOf(singularKeyword || emojiKeyword) !== -1) {

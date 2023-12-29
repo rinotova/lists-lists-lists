@@ -1,3 +1,4 @@
+import plural from "pluralize";
 export function emojiToUnicode(emoji: string) {
   let comp;
   if (emoji.length === 1) {
@@ -12,3 +13,7 @@ export function emojiToUnicode(emoji: string) {
   }
   return comp.toString(16);
 }
+
+export const singularize = (word: string) => {
+  return plural.singular(word);
+};
