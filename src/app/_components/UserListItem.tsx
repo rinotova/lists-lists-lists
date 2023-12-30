@@ -6,6 +6,7 @@ import { type UserList } from "~/models/List";
 import Link from "next/link";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import { useRemoveListFromUser } from "~/hooks/useRemoveListFromUser";
+import { toast } from "./ui/use-toast";
 
 function UserListItem({ item }: { item: UserList }) {
   const { deleteList } = useRemoveListFromUser();
@@ -14,7 +15,25 @@ function UserListItem({ item }: { item: UserList }) {
       actionButtons={[
         {
           content: (
-            <div className="your-className-here">
+            <div className="flex h-full w-full cursor-pointer items-center justify-center bg-blue-500 text-white">
+              <span>SHARE</span>
+            </div>
+          ),
+          onClick: () => {
+            void navigator.clipboard.writeText(
+              `${window.location.origin}/list/${item.id}`,
+            );
+            toast({
+              title: "Link copied!",
+              description: "Anyone with a link can view and edit the list",
+              variant: "default",
+              duration: 3000,
+            });
+          },
+        },
+        {
+          content: (
+            <div className="flex h-full w-full cursor-pointer items-center justify-center bg-green-500 text-white">
               <span>EDIT</span>
             </div>
           ),
