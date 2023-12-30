@@ -168,7 +168,7 @@ export const listRouter = createTRPCRouter({
     .input(ListSchema)
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const { name, id } = input;
+      const { name, id, emoji } = input;
 
       return ctx.db.list.update({
         where: {
@@ -177,6 +177,7 @@ export const listRouter = createTRPCRouter({
         },
         data: {
           name,
+          emoji,
         },
       });
     }),

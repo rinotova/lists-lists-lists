@@ -7,6 +7,7 @@ import Link from "next/link";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import { useRemoveListFromUser } from "~/hooks/useRemoveListFromUser";
 import { toast } from "./ui/use-toast";
+import EditListForm from "./EditListForm";
 
 function UserListItem({ item }: { item: UserList }) {
   const { deleteList } = useRemoveListFromUser();
@@ -32,12 +33,10 @@ function UserListItem({ item }: { item: UserList }) {
           },
         },
         {
-          content: (
-            <div className="flex h-full w-full cursor-pointer items-center justify-center bg-green-500 text-white">
-              <span>EDIT</span>
-            </div>
-          ),
-          onClick: () => alert("Pressed the EDIT button"),
+          content: <EditListForm list={item} />,
+          onClick: () => {
+            //
+          },
         },
         {
           content: (
