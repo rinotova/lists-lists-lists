@@ -6,13 +6,15 @@ import { useGetAuthorizedUserOrRedirect } from "~/hooks/useGetAuthorizedUserOrRe
 import { api } from "~/trpc/server";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  await useGetAuthorizedUserOrRedirect();
-  const listNameData = await api.list.getListName.query({ listId: params.id });
+  await useGetAuthorizedUserOrRedirect(`/sign-in?listId=${params.id}`);
+  const { name } = await api.list.addListToUserList.mutate({
+    listId: params.id,
+  });
 
   return (
     <MaxWidthWrapper className="p-4">
       <div className="flex flex-col gap-4">
-        <ListName listName={listNameData?.name} />
+        <ListName listName={name} />
         <AddItemForm listId={params.id} />
         <ListItems listId={params.id} />
       </div>

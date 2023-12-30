@@ -3,10 +3,17 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 function SignInButton({ callbackBaseUrl }: { callbackBaseUrl: string }) {
+  const searchParams = useSearchParams();
+  const listId = searchParams.get("listId");
+  let callbackUrl = `${callbackBaseUrl}/lists`;
+  if (listId) {
+    callbackUrl = `${callbackBaseUrl}/list/${listId}`;
+  }
   const signInHandler = () => {
-    void signIn("google", { callbackUrl: `${callbackBaseUrl}/lists` });
+    void signIn("google", { callbackUrl });
   };
   return (
     <Button

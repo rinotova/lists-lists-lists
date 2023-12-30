@@ -63,6 +63,31 @@ export const listRouter = createTRPCRouter({
         message: "A list name must be unique",
       });
     }),
+  addListToUserList: protectedProcedure
+    .input(GetListSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const { listId } = input;
+
+      const existingList = await ctx.db.list.findUnique({
+        where: {
+          name: listId,
+          userIDs: { has: userId },
+        },
+      });
+
+      // If the user is not in the list, add them
+      if (!existingList) {
+        return await ctx.db.list.update({
+          where: { id: listId },
+          data: {
+            userIDs: { push: userId },
+          },
+        });
+      }
+
+      return existingList;
+    }),
   getUserLists: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
 
