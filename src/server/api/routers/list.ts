@@ -68,22 +68,26 @@ export const listRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const { listId } = input;
+      let existingList;
 
-      const existingList = await ctx.db.list.findUnique({
-        where: {
-          name: listId,
-          userIDs: { has: userId },
-        },
-      });
-
-      // If the user is not in the list, add them
-      if (!existingList) {
-        return await ctx.db.list.update({
-          where: { id: listId },
-          data: {
-            userIDs: { push: userId },
+      try {
+        existingList = await ctx.db.list.findUnique({
+          where: {
+            id: listId,
           },
         });
+
+        // If the user is not in the list, add them
+        if (existingList && !existingList.userIDs.includes(userId)) {
+          return await ctx.db.list.update({
+            where: { id: listId },
+            data: {
+              userIDs: { push: userId },
+            },
+          });
+        }
+      } catch (error) {
+        //
       }
 
       return existingList;
