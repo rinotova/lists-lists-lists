@@ -7,6 +7,7 @@ import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import { useRemoveItemFromList } from "~/hooks/useRemoveItemFromList";
 import { cn } from "~/lib/utils";
 import { useEditListItem } from "~/hooks/useEditListItem";
+import EditItemForm from "./EditItemForm";
 
 function Item({ item, listId }: { item: ListItem; listId: string }) {
   const { deleteItem } = useRemoveItemFromList(listId);
@@ -19,12 +20,10 @@ function Item({ item, listId }: { item: ListItem; listId: string }) {
     <SwipeToRevealActions
       actionButtons={[
         {
-          content: (
-            <div className="your-className-here">
-              <span>EDIT</span>
-            </div>
-          ),
-          onClick: () => alert("Pressed the EDIT button"),
+          content: <EditItemForm item={item} />,
+          onClick: () => {
+            //
+          },
         },
         {
           content: (

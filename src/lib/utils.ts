@@ -26,7 +26,7 @@ const singularize = (word: string) => {
   return plural.singular(word);
 };
 
-export const getSuggestedEmoji = (phrase: string, isListContext: boolean) => {
+export const getSuggestedEmoji = (phrase: string, isListContext?: boolean) => {
   const emojiKeywordArray = phrase.toLowerCase().trim().split(" ");
   const emojiKeyword =
     emojiKeywordArray[isListContext ? 0 : emojiKeywordArray.length - 1];

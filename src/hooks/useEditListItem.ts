@@ -6,7 +6,7 @@ export const useEditListItem = (listId: string) => {
   const trpcUtils = api.useUtils();
 
   const { mutate } = api.list.updateListItem.useMutation({
-    onMutate: async ({ id, complete }) => {
+    onMutate: async ({ id, text, complete }) => {
       // Cancel any outgoing refetches so they don't overwrite our optimistic update.
       await trpcUtils.list.getListItems.cancel();
 
@@ -21,7 +21,7 @@ export const useEditListItem = (listId: string) => {
 
         return prev.map((item) => {
           if (item.id === id) {
-            return { ...item, complete };
+            return { ...item, text, complete };
           }
           return item;
         });
