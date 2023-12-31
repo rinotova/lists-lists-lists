@@ -2,6 +2,7 @@ import MaxWidthWrapperNavBar from "./_components/MaxWidthWrapperNavBar";
 import { getServerAuthSession } from "~/server/auth";
 import { buttonVariants } from "./_components/ui/button";
 import Link from "next/link";
+import { cn } from "~/lib/utils";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -11,7 +12,11 @@ export default async function Home() {
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Create <span className="text-[hsl(280,100%,70%)]">Lists</span> App
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
+        <div
+          className={cn("grid grid-cols-1 gap-4 sm:grid-cols-3  md:gap-8", {
+            "sm:grid-cols-2": session && session.user,
+          })}
+        >
           <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20">
             <h3 className="text-2xl font-bold">Everything you need</h3>
             <div className="text-lg">
@@ -33,7 +38,7 @@ export default async function Home() {
           {!session?.user && (
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20">
               <h3 className="text-2xl font-bold">Create an account</h3>
-              <div className="text-lg">And start making lists!</div>
+              <div className="text-lg">...and start making lists!</div>
               <Link
                 href="/sign-in"
                 className={buttonVariants({
