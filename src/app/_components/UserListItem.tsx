@@ -52,7 +52,9 @@ function UserListItem({ item }: { item: UserList }) {
       <Link className="w-full" href={`/list/${item.id}`}>
         <Card className="flex items-center rounded-none bg-orange-300 drop-shadow-sm dark:dark:bg-slate-700">
           <CardContent className="flex items-center gap-2 p-4 pt-4 text-lg">
-            <p className="break-all">{item.name}</p>
+            <p className="max-w-[250px] truncate text-ellipsis sm:max-w-[500px]">
+              {item.name}
+            </p>
             {item.emoji ? (
               <span className="text-3xl">
                 {String.fromCodePoint(item.emoji)}

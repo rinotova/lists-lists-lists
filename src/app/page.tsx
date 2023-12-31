@@ -23,10 +23,10 @@ export default async function Home() {
             <h3 className="text-2xl font-bold">Features</h3>
             <div className="text-lg">
               <ul>
-                <li>Create fun lists with emojies</li>
-                <li>Share, edit and remove lists</li>
-                <li>Accesible from anywhere</li>
-                <li>No limits</li>
+                <li>Create fun lists with emojies.</li>
+                <li>Share, edit and remove lists.</li>
+                <li>Accesible from anywhere.</li>
+                <li>Long press on items to reveal content.</li>
               </ul>
             </div>
           </div>

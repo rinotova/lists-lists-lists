@@ -4,6 +4,13 @@
 
 [Lists demo](https://lists-lists-lists.vercel.app/)
 
+## Features
+
+- Create fun lists with emojies.
+- Swipe to share, edit and remove items.
+- Accesible from anywhere.
+- Long press on items to reveal content.
+
 ## Stack
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
