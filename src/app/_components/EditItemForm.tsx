@@ -1,7 +1,7 @@
 "use client";
 
 import { useEditListItem } from "~/hooks/useEditListItem";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { type FormEvent, useState } from "react";
 import { getSuggestedEmoji } from "~/lib/utils";
 import { ListItemSchema, type ListItem } from "~/models/List";
@@ -50,24 +50,27 @@ function EditItemForm({ item }: { item: ListItem }) {
         </div>
       </DialogTrigger>
       <DialogContent className="flex items-center justify-center">
-        <form
-          onSubmit={onEditHandler}
-          className="m-3 flex h-12 w-full items-center justify-center gap-2"
-        >
-          <Input
-            onChange={(e) => setItemText(e.target.value)}
-            value={itemText}
-            className="h-12 text-center text-2xl drop-shadow-md"
-            autoFocus
-          />
-          <button
-            type="submit"
-            disabled={itemText.length < 3}
-            className="cursor-pointer hover:opacity-75 disabled:opacity-50"
+        <div className="flex flex-col items-center justify-center gap-4">
+          <DialogTitle>Edit item</DialogTitle>
+          <form
+            onSubmit={onEditHandler}
+            className="m-3 flex h-12 w-full items-center justify-center gap-2"
           >
-            <PlusSquare className="h-14 w-14  stroke-1 " />
-          </button>
-        </form>
+            <Input
+              onChange={(e) => setItemText(e.target.value)}
+              value={itemText}
+              className="h-12 text-center text-2xl drop-shadow-md"
+              autoFocus
+            />
+            <button
+              type="submit"
+              disabled={itemText.length < 3}
+              className="cursor-pointer hover:opacity-75 disabled:opacity-50"
+            >
+              <PlusSquare className="h-14 w-14  stroke-1 " />
+            </button>
+          </form>
+        </div>
       </DialogContent>
     </Dialog>
   );

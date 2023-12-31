@@ -39,9 +39,10 @@ function Item({ item, listId }: { item: ListItem; listId: string }) {
       <Card
         onClick={toggleItemHanlder}
         className={cn(
-          `flex w-full cursor-pointer items-center rounded-none bg-blue-300 drop-shadow-sm`,
+          `flex w-full cursor-pointer items-center rounded-none bg-blue-300 drop-shadow-sm dark:bg-blue-900`,
           {
-            "bg-slate-200 text-zinc-500 line-through": item.complete,
+            "bg-slate-200 text-zinc-500 line-through dark:bg-gray-700":
+              item.complete,
           },
         )}
       >

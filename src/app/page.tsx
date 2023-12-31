@@ -1,36 +1,49 @@
-import Link from "next/link";
 import MaxWidthWrapperNavBar from "./_components/MaxWidthWrapperNavBar";
+import { getServerAuthSession } from "~/server/auth";
+import { buttonVariants } from "./_components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
+  const session = await getServerAuthSession();
   return (
     <MaxWidthWrapperNavBar>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Create <span className="text-[hsl(280,100%,70%)]">Lists</span> App
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
+          <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20">
+            <h3 className="text-2xl font-bold">Everything you need</h3>
             <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
+              Just create a new list and add items. Study topics,
+              groceries...anything!
             </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
+          </div>
+          <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20">
+            <h3 className="text-2xl font-bold">Features</h3>
             <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
+              <ul>
+                <li>Create fun lists with emojies</li>
+                <li>Share, edit and remove lists</li>
+                <li>Accesible from anywhere</li>
+                <li>No limits</li>
+              </ul>
             </div>
-          </Link>
+          </div>
+          {!session?.user && (
+            <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20">
+              <h3 className="text-2xl font-bold">Create an account</h3>
+              <div className="text-lg">And start making lists!</div>
+              <Link
+                href="/sign-in"
+                className={buttonVariants({
+                  variant: "secondary",
+                })}
+              >
+                Sign in
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </MaxWidthWrapperNavBar>

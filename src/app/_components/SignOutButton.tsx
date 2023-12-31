@@ -9,7 +9,7 @@ function SignOutButton({ callbackUrl }: { callbackUrl: string }) {
     void signOut({ callbackUrl });
   };
   return (
-    <Button className="mx-auto w-80" onClick={signOutHandler} variant="outline">
+    <Button className="w-80" onClick={signOutHandler} variant="outline">
       Sign out
     </Button>
   );

@@ -31,7 +31,7 @@ function AddItemForm({ listId }: { listId?: string }) {
         value={itemName}
         onChange={(e) => setItemName(e.target.value)}
         placeholder={
-          !!isNewListContext ? "New item text..." : "New list name..."
+          !isNewListContext ? "New item text..." : "New list name..."
         }
         className="h-12 text-center text-2xl drop-shadow-md"
       />

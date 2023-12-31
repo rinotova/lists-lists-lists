@@ -9,10 +9,10 @@ async function Navbar() {
   const session = await getServerAuthSession();
   const user = session?.user;
   return (
-    <nav className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
-      <header className="relative bg-white">
+    <nav className="sticky inset-x-0 top-0 z-50 h-16 ">
+      <header className="relative bg-white dark:bg-slate-700">
         <MaxWidthWrapperNavBar>
-          <div className="border-b border-gray-200">
+          <div className="border-b border-gray-200 dark:border-gray-700">
             <div className="flex h-16 items-center justify-between">
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">

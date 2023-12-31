@@ -9,6 +9,7 @@ import SignOutButton from "./SignOutButton";
 import { env } from "~/env";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getServerAuthSession } from "~/server/auth";
+import { ThemeToggleButton } from "./ThemeToggleButton";
 
 async function SideBar() {
   const callbackUrl =
@@ -29,7 +30,10 @@ async function SideBar() {
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <SignOutButton callbackUrl={callbackUrl} />
+        <div className="flex flex-col items-start gap-4">
+          <ThemeToggleButton />
+          <SignOutButton callbackUrl={callbackUrl} />
+        </div>
       </SheetContent>
     </Sheet>
   );
