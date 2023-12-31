@@ -89,7 +89,7 @@ function Item({ item, listId }: { item: ListItem; listId: string }) {
 
       {link && (
         <Link
-          className="-mt-2 pl-6 text-sm underline"
+          className="-mt-2 max-w-[250px] truncate text-ellipsis pl-6 text-sm underline sm:max-w-[500px]"
           href={link}
           target="_blank"
         >
